@@ -3,3 +3,8 @@ Bundler.require
 
 ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'db/development.db')
 require_all 'lib'
+
+Dir[File.join(File.dirname(__FILE__), "../app", "*.rb")].each {|f| require f}
+Dir[File.join(File.dirname(__FILE__), "../lib", "*.rb")].each {|f| require f}
+Dir[File.join(File.dirname(__FILE__), "../db", "*.rb")].each {|f| require f}
+require_relative '../db/development.db'
