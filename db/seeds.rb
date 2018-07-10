@@ -22,6 +22,3 @@ parks["data"].each do |park|
   name: park["name"]
   )
 end
-
-# binding.pry
-# true
