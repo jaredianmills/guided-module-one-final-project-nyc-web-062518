@@ -94,7 +94,8 @@ class Runner
     park.url
   end
 
-  def park_info_options_navigator(park, user_input)
+  def park_info_options_navigator(park)
+    user_input = gets.strip
     until user_input == "9"
       if user_input == "1"
         puts "=============================================="
@@ -139,14 +140,14 @@ class Runner
         Launchy.open(get_park_website(park))
         list_options_for_park
         user_input = gets.strip
-      elsif user_input == "9"
-        list_options
-        user_input = gets.strip
-        main_menu
+      # elsif user_input == "9"
+      #   list_options
+        # user_input = gets.strip
+        # main_menu
       else
         puts "I'm sorry, I don't understand your request. Please try again:"
         list_options
-        main_menu
+        # main_menu
       end
 
       # user_input
@@ -158,7 +159,6 @@ class Runner
 
   def main_menu
     user_input = gets.strip
-    # binding.pry
     until user_input == "leave"
       # binding.pry
       if user_input == "1"
@@ -168,8 +168,9 @@ class Runner
         park = find_park_by_name(park_name)
         puts "You have selected #{park.full_name}."
         list_options_for_park
-        user_input = gets.strip
-        park_info_options_navigator(park, user_input)
+        # user_input = gets.strip
+        park_info_options_navigator(park)
+        user_input = ""
       elsif user_input == "2"
         puts "Please input a state's two letter code"
         state = gets.strip
@@ -182,6 +183,10 @@ class Runner
         user_input = gets.strip
       # elsif user_input == "leave"
       #   puts "Goodbye!"
+      elsif user_input == ""
+        list_options
+        # main_menu
+        user_input = gets.strip
       else
         puts "I'm sorry, I don't understand your request. Please try again:"
         list_options
