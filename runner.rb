@@ -22,12 +22,12 @@ class Runner
   end
 
   def greet_user
-    puts "=============================================="
-    puts "Hello! Welcome to the National Parks Service!"
+    puts "=================================================="
+    puts "Hello! Welcome to the US National Parks Database!"
   end
 
   def list_options
-    puts "=============================================="
+    puts "=================================================="
     puts "Please select from one of the options below:"
     puts "1. Find a park by name"
     puts "2. Find all parks by state"
@@ -36,7 +36,7 @@ class Runner
   end
 
   def list_options_for_park
-    puts "=============================================="
+    puts "=================================================="
     puts "What would you like to know about this park?"
     puts "1. Park description"
     puts "2. States(s) that the park is in"
@@ -98,17 +98,17 @@ class Runner
     user_input = gets.strip
     until user_input == "9"
       if user_input == "1"
-        puts "=============================================="
+        puts "=================================================="
         puts get_park_description(park)
         list_options_for_park
         user_input = gets.strip
       elsif user_input == "2"
-        puts "=============================================="
+        puts "=================================================="
         puts "#{park.full_name} is in the following state(s): #{get_states_park_is_in(park)}"
         list_options_for_park
         user_input = gets.strip
       elsif user_input == "3"
-        puts "=============================================="
+        puts "=================================================="
         puts get_directions_information(park)
         list_options_for_park
         user_input = gets.strip
@@ -117,21 +117,21 @@ class Runner
         list_options_for_park
         user_input = gets.strip
       elsif user_input == "5"
-        puts "=============================================="
+        puts "=================================================="
         puts get_park_weather(park)
         list_options_for_park
         user_input = gets.strip
       elsif user_input == "6"
-        puts "=============================================="
+        puts "=================================================="
         puts get_lat_and_long(park)
         list_options_for_park
         user_input = gets.strip
       elsif user_input == "7"
         if get_park_designation(park) == ""
-          puts "=============================================="
+          puts "=================================================="
           puts "I'm sorry, I do not have that information."
         else
-          puts "=============================================="
+          puts "=================================================="
         puts get_park_designation(park)
         end
         list_options_for_park
@@ -166,6 +166,9 @@ class Runner
         puts "Please input a park name"
         park_name = gets.strip
         park = find_park_by_name(park_name)
+        puts "=================================================="
+        small_mountains
+        puts "=================================================="
         puts "You have selected #{park.full_name}."
         list_options_for_park
         # user_input = gets.strip
@@ -196,67 +199,41 @@ class Runner
   end
 
 
-  # def mountains
-  #   "          /\"
-  #   "         /**\"
-  #   "        /****\   /\"
-  #   "       /      \ /**\"
-  #   "      /  /\    /    \        /\    /\  /\      /\            /\/\/\  /\"
-  #   "     /  /  \  /      \      /  \/\/  \/  \  /\/  \/\  /\  /\/ / /  \/  \"
-  #   "    /  /    \/ /\     \    /    \ \  /    \/ /   /  \/  \/  \  /    \   \"
-  #   "   /  /      \/  \/\   \  /      \  /    /    \"
-  #   "__/__/_______/___/__\___\__________________________________________________"
-  # end
+  def big_mountains
+  puts  "          /\\"
+  puts  "         /**\\"
+  puts  "        /****\\   /\\"
+  puts  "       /      \\ /**\\"
+  puts  "      /  /\\    /    \\        /\\    /\\  /\\      /\\            /\\/\\/\\  /\\"
+  puts  "     /  /  \\  /      \\      /  \\/\\/  \\/  \\  /\\/  \\/\\  /\\  /\\/ / /  \\/  \\"
+  puts  "    /  /    \\/ /\\     \\    /    \\ \\  /    \\/ /   /  \\/  \\/  \\  /    \\   \\"
+  puts  "   /  /      \\/  \\/\\   \\  /      \\  /    /    \\"
+  puts  "__/__/_______/___/__\____\\__________________________________________________"
+  end
 
 
-  # def mountains
-  #   puts "          o\"
-  #   puts "_________/__\__________"
-  #   puts ",'-.                 . `-|"
-  #   puts "(____".       ,-.    '   ||"
-  #   puts "|          /\,-\   ,-.  |"
-  #   puts "|      ,-./     \ /'.-\ |"
-  #   puts "|     /-.,\      /     \|"
-  #   puts "|    /     \    ,-.     \"
-  #   puts "|___/_______\__/___\_____\"
-  # end
+  def small_mountains
+    puts "            o\\"
+    puts "  _________/__\\_____________"
+    puts ",'-..                   `- |"
+    puts "(____'.       ,-.      '  ||"
+    puts "  |          /\\,-\\   ,-.   |"
+    puts "  |      ,-./     \\ /'.-\\  |"
+    puts "  |     /-.,\\      /     \\ |"
+    puts "  |    /     \\    ,-.     \\"
+    puts "  |___/_______\\__/___\\_____\\"
+  end
 
 
   def run
     tree_art
     greet_user
     list_options
-
-    # until main_menu(user_input) == ""
-    # until user_input == "leave"
     main_menu
-      # if user_input == "1"
-      #   puts "Please input a park name"
-      #   park_name = gets.strip
-      #   park = find_park_by_name(park_name)
-      #   puts "You have selected #{park.full_name}."
-      #   list_options_for_park
-      #   user_input = gets.strip
-      #   park_info_options_navigator(park, user_input)
-      #   user_input = gets.strip
-      #   park_info_options_navigator(park, user_input)
-      # elsif user_input == "2"
-      #   puts "Please input a state's two letter code"
-      #   state = gets.strip
-      #   find_parks_by_state(state)
-      #   list_options
-      #   user_input = gets.strip
-      # elsif user_input == "3"
-      #   find_all_parks
-      #   list_options
-      #   user_input = gets.strip
-      # else
-      #   puts "I'm sorry, I don't understand your request. Please try again:"
-      #   list_options
-      #   user_input = gets.strip
-      # end
-    # end
-    puts "Goodbye!"
+    puts "=================================================="
+    puts "Thank you for using the National Parks Database!"
+    puts "=================================================="
+    big_mountains
   end
 
 
