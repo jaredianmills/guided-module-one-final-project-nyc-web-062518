@@ -32,7 +32,7 @@ class Runner
     puts "1. Find a park by name"
     puts "2. Find all parks by state"
     puts "3. List all of the parks (there are 497 of them!)"
-    puts "Type 'exit' to exit the application"
+    puts "Type 'leave' to leave the application"
   end
 
   def list_options_for_park
@@ -95,7 +95,7 @@ class Runner
   end
 
   def park_info_options_navigator(park, user_input)
-    until user_input == "9"
+    # until user_input == "9"
       if user_input == "1"
         puts "=============================================="
         puts get_park_description(park)
@@ -142,40 +142,42 @@ class Runner
       else
         puts "I'm sorry, I don't understand your request. Please try again:"
       end
-    end
+    # end
     list_options
     user_input = gets.strip
     main_menu(user_input)
   end
 
   def main_menu(user_input)
-    if user_input == "1"
-      puts "Please input a park name"
-      park_name = gets.strip
-      park = find_park_by_name(park_name)
-      puts "You have selected #{park.full_name}."
-      list_options_for_park
-      user_input = gets.strip
-      park_info_options_navigator(park, user_input)
-      user_input = gets.strip
-      park_info_options_navigator(park, user_input)
-    elsif user_input == "2"
-      puts "Please input a state's two letter code"
-      state = gets.strip
-      find_parks_by_state(state)
-      list_options
-      user_input = gets.strip
-    elsif user_input == "3"
-      find_all_parks
-      list_options
-      user_input = gets.strip
-    elsif user_input == "exit"
-      "exit"
-    else
-      puts "I'm sorry, I don't understand your request. Please try again:"
-      list_options
-      user_input = gets.strip
-    end
+    # until user_input == "leave"
+      if user_input == "1"
+        puts "Please input a park name"
+        park_name = gets.strip
+        park = find_park_by_name(park_name)
+        puts "You have selected #{park.full_name}."
+        list_options_for_park
+        user_input = gets.strip
+        park_info_options_navigator(park, user_input)
+        user_input = gets.strip
+        park_info_options_navigator(park, user_input)
+      elsif user_input == "2"
+        puts "Please input a state's two letter code"
+        state = gets.strip
+        find_parks_by_state(state)
+        list_options
+        user_input = gets.strip
+      elsif user_input == "3"
+        find_all_parks
+        list_options
+        user_input = gets.strip
+      elsif user_input == "leave"
+        puts "Goodbye!"
+      else
+        puts "I'm sorry, I don't understand your request. Please try again:"
+        list_options
+        user_input = gets.strip
+      end
+    # end
   end
 
 
@@ -210,7 +212,8 @@ class Runner
     greet_user
     list_options
     user_input = gets.strip
-    until main_menu(user_input) == "exit"
+    # until main_menu(user_input) == ""
+    until user_input == "leave"
       main_menu(user_input)
       # if user_input == "1"
       #   puts "Please input a park name"
