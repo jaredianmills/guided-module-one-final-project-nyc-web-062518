@@ -95,7 +95,7 @@ class Runner
   end
 
   def park_info_options_navigator(park, user_input)
-    # until user_input == "9"
+    until user_input == "9"
       if user_input == "1"
         puts "=============================================="
         puts get_park_description(park)
@@ -139,25 +139,35 @@ class Runner
         Launchy.open(get_park_website(park))
         list_options_for_park
         user_input = gets.strip
+      elsif user_input == "9"
+        list_options
+        user_input = gets.strip
+        main_menu
       else
         puts "I'm sorry, I don't understand your request. Please try again:"
+        list_options
+        main_menu
       end
-    # end
-    list_options
-    user_input = gets.strip
-    main_menu(user_input)
+
+      # user_input
+    end
+    # user_input = gets.strip
+    # main_menu(user_input)
+    # user_input == ""
   end
 
-  def main_menu(user_input)
-    # until user_input == "leave"
+  def main_menu
+    user_input = gets.strip
+    # binding.pry
+    until user_input == "leave"
+      # binding.pry
       if user_input == "1"
+        # binding.pry
         puts "Please input a park name"
         park_name = gets.strip
         park = find_park_by_name(park_name)
         puts "You have selected #{park.full_name}."
         list_options_for_park
-        user_input = gets.strip
-        park_info_options_navigator(park, user_input)
         user_input = gets.strip
         park_info_options_navigator(park, user_input)
       elsif user_input == "2"
@@ -170,14 +180,14 @@ class Runner
         find_all_parks
         list_options
         user_input = gets.strip
-      elsif user_input == "leave"
-        puts "Goodbye!"
+      # elsif user_input == "leave"
+      #   puts "Goodbye!"
       else
         puts "I'm sorry, I don't understand your request. Please try again:"
         list_options
         user_input = gets.strip
       end
-    # end
+    end
   end
 
 
@@ -211,10 +221,10 @@ class Runner
     tree_art
     greet_user
     list_options
-    user_input = gets.strip
+
     # until main_menu(user_input) == ""
-    until user_input == "leave"
-      main_menu(user_input)
+    # until user_input == "leave"
+    main_menu
       # if user_input == "1"
       #   puts "Please input a park name"
       #   park_name = gets.strip
@@ -240,7 +250,8 @@ class Runner
       #   list_options
       #   user_input = gets.strip
       # end
-    end
+    # end
+    puts "Goodbye!"
   end
 
 
