@@ -96,14 +96,17 @@ class Runner
 
   def park_info_options_navigator(park, user_response)
     if user_response == "1"
+      puts "=============================================="
       puts get_park_description(park)
       list_options_for_park
       user_respone = gets.strip
     elsif user_response == "2"
+      puts "=============================================="
       puts "#{park.full_name} is in the following state(s): #{get_states_park_is_in(park)}"
       list_options_for_park
       user_respone = gets.strip
     elsif user_response == "3"
+      puts "=============================================="
       puts get_directions_information(park)
       list_options_for_park
       user_respone = gets.strip
@@ -112,17 +115,21 @@ class Runner
       list_options_for_park
       user_respone = gets.strip
     elsif user_response == "5"
+      puts "=============================================="
       puts get_park_weather(park)
       list_options_for_park
       user_respone = gets.strip
     elsif user_response == "6"
+      puts "=============================================="
       puts get_lat_and_long(park)
       list_options_for_park
       user_respone = gets.strip
     elsif user_response == "7"
       if get_park_designation(park) == ""
+        puts "=============================================="
         puts "I'm sorry, I do not have that information."
       else
+        puts "=============================================="
       puts get_park_designation(park)
       end
       list_options_for_park
