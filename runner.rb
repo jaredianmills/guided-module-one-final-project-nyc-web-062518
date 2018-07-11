@@ -94,52 +94,87 @@ class Runner
     park.url
   end
 
-  def park_info_options_navigator(park, user_response)
-    if user_response == "1"
-      puts "=============================================="
-      puts get_park_description(park)
-      list_options_for_park
-      user_respone = gets.strip
-    elsif user_response == "2"
-      puts "=============================================="
-      puts "#{park.full_name} is in the following state(s): #{get_states_park_is_in(park)}"
-      list_options_for_park
-      user_respone = gets.strip
-    elsif user_response == "3"
-      puts "=============================================="
-      puts get_directions_information(park)
-      list_options_for_park
-      user_respone = gets.strip
-    elsif user_response == "4"
-      Launchy.open(get_directions_on_the_web(park))
-      list_options_for_park
-      user_respone = gets.strip
-    elsif user_response == "5"
-      puts "=============================================="
-      puts get_park_weather(park)
-      list_options_for_park
-      user_respone = gets.strip
-    elsif user_response == "6"
-      puts "=============================================="
-      puts get_lat_and_long(park)
-      list_options_for_park
-      user_respone = gets.strip
-    elsif user_response == "7"
-      if get_park_designation(park) == ""
+  def park_info_options_navigator(park, user_input)
+    until user_input == "9"
+      if user_input == "1"
         puts "=============================================="
-        puts "I'm sorry, I do not have that information."
+        puts get_park_description(park)
+        list_options_for_park
+        user_input = gets.strip
+      elsif user_input == "2"
+        puts "=============================================="
+        puts "#{park.full_name} is in the following state(s): #{get_states_park_is_in(park)}"
+        list_options_for_park
+        user_input = gets.strip
+      elsif user_input == "3"
+        puts "=============================================="
+        puts get_directions_information(park)
+        list_options_for_park
+        user_input = gets.strip
+      elsif user_input == "4"
+        Launchy.open(get_directions_on_the_web(park))
+        list_options_for_park
+        user_input = gets.strip
+      elsif user_input == "5"
+        puts "=============================================="
+        puts get_park_weather(park)
+        list_options_for_park
+        user_input = gets.strip
+      elsif user_input == "6"
+        puts "=============================================="
+        puts get_lat_and_long(park)
+        list_options_for_park
+        user_input = gets.strip
+      elsif user_input == "7"
+        if get_park_designation(park) == ""
+          puts "=============================================="
+          puts "I'm sorry, I do not have that information."
+        else
+          puts "=============================================="
+        puts get_park_designation(park)
+        end
+        list_options_for_park
+        user_input = gets.strip
+      elsif user_input == "8"
+        Launchy.open(get_park_website(park))
+        list_options_for_park
+        user_input = gets.strip
       else
-        puts "=============================================="
-      puts get_park_designation(park)
+        puts "I'm sorry, I don't understand your request. Please try again:"
       end
+    end
+    list_options
+    user_input = gets.strip
+    main_menu(user_input)
+  end
+
+  def main_menu(user_input)
+    if user_input == "1"
+      puts "Please input a park name"
+      park_name = gets.strip
+      park = find_park_by_name(park_name)
+      puts "You have selected #{park.full_name}."
       list_options_for_park
-      user_respone = gets.strip
-    elsif user_response == "8"
-      Launchy.open(get_park_website(park))
-      list_options_for_park
-      user_respone = gets.strip
-    elsif user_response == "9"
+      user_input = gets.strip
+      park_info_options_navigator(park, user_input)
+      user_input = gets.strip
+      park_info_options_navigator(park, user_input)
+    elsif user_input == "2"
+      puts "Please input a state's two letter code"
+      state = gets.strip
+      find_parks_by_state(state)
       list_options
+      user_input = gets.strip
+    elsif user_input == "3"
+      find_all_parks
+      list_options
+      user_input = gets.strip
+    elsif user_input == "exit"
+      "exit"
+    else
+      puts "I'm sorry, I don't understand your request. Please try again:"
+      list_options
+      user_input = gets.strip
     end
   end
 
@@ -175,31 +210,33 @@ class Runner
     greet_user
     list_options
     user_input = gets.strip
-    until user_input == "exit"
-      if user_input == "1"
-        puts "Please input a park name"
-        park_name = gets.strip
-        park = find_park_by_name(park_name)
-        puts "You have selected #{park.full_name}."
-        list_options_for_park
-        user_response = gets.strip
-        park_info_options_navigator(park, user_response)
-        user_response = gets.strip
-      elsif user_input == "2"
-        puts "Please input a state's two letter code"
-        state = gets.strip
-        find_parks_by_state(state)
-        list_options
-        user_input = gets.strip
-      elsif user_input == "3"
-        find_all_parks
-        list_options
-        user_input = gets.strip
-      else
-        puts "I'm sorry, I don't understand your request. Please try again:"
-        list_options
-        user_input = gets.strip
-      end
+    until main_menu(user_input) == "exit"
+      main_menu(user_input)
+      # if user_input == "1"
+      #   puts "Please input a park name"
+      #   park_name = gets.strip
+      #   park = find_park_by_name(park_name)
+      #   puts "You have selected #{park.full_name}."
+      #   list_options_for_park
+      #   user_input = gets.strip
+      #   park_info_options_navigator(park, user_input)
+      #   user_input = gets.strip
+      #   park_info_options_navigator(park, user_input)
+      # elsif user_input == "2"
+      #   puts "Please input a state's two letter code"
+      #   state = gets.strip
+      #   find_parks_by_state(state)
+      #   list_options
+      #   user_input = gets.strip
+      # elsif user_input == "3"
+      #   find_all_parks
+      #   list_options
+      #   user_input = gets.strip
+      # else
+      #   puts "I'm sorry, I don't understand your request. Please try again:"
+      #   list_options
+      #   user_input = gets.strip
+      # end
     end
   end
 
