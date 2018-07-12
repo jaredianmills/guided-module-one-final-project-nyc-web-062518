@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180710170245) do
+ActiveRecord::Schema.define(version: 20180712155008) do
 
   create_table "parks", force: :cascade do |t|
     t.string "states"
@@ -24,6 +24,20 @@ ActiveRecord::Schema.define(version: 20180710170245) do
     t.string "full_name"
     t.string "url"
     t.text   "weather_info"
+    t.string "name"
+  end
+
+  create_table "user_visited_parks", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "park_id"
+  end
+
+  create_table "user_wishlist_parks", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "park_id"
+  end
+
+  create_table "users", force: :cascade do |t|
     t.string "name"
   end
 
