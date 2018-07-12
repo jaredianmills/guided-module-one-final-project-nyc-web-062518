@@ -110,37 +110,44 @@ class Runner
 
 
   def park_info_options_navigator(park)
-    user_input = gets.strip
+    # user_input = gets.strip
+    user_input = prompt_user_park_info
     until user_input == "9"
       if user_input == "1"
         puts "=================================================="
         puts get_park_description(park)
-        list_options_for_park
-        user_input = gets.strip
+        # list_options_for_park
+        # user_input = gets.strip
+        user_input = prompt_user_park_info
       elsif user_input == "2"
         puts "=================================================="
         puts "#{park.full_name} is in the following state(s): #{get_states_park_is_in(park)}"
-        list_options_for_park
-        user_input = gets.strip
+        # list_options_for_park
+        # user_input = gets.strip
+        user_input = prompt_user_park_info
       elsif user_input == "3"
         puts "=================================================="
         puts get_directions_information(park)
-        list_options_for_park
-        user_input = gets.strip
+        # list_options_for_park
+        # user_input = gets.strip
+        user_input = prompt_user_park_info
       elsif user_input == "4"
         Launchy.open(get_directions_on_the_web(park))
-        list_options_for_park
-        user_input = gets.strip
+        # list_options_for_park
+        # user_input = gets.strip
+        user_input = prompt_user_park_info
       elsif user_input == "5"
         puts "=================================================="
         puts get_park_weather(park)
-        list_options_for_park
-        user_input = gets.strip
+        # list_options_for_park
+        # user_input = gets.strip
+        user_input = prompt_user_park_info
       elsif user_input == "6"
         puts "=================================================="
         puts get_lat_and_long(park)
-        list_options_for_park
-        user_input = gets.strip
+        # list_options_for_park
+        # user_input = gets.strip
+        user_input = prompt_user_park_info
       elsif user_input == "7"
         if get_park_designation(park) == ""
           puts "=================================================="
@@ -149,12 +156,14 @@ class Runner
           puts "=================================================="
         puts get_park_designation(park)
         end
-        list_options_for_park
-        user_input = gets.strip
+        # list_options_for_park
+        # user_input = gets.strip
+        user_input = prompt_user_park_info
       elsif user_input == "8"
         Launchy.open(get_park_website(park))
-        list_options_for_park
-        user_input = gets.strip
+        # list_options_for_park
+        # user_input = gets.strip
+        user_input = prompt_user_park_info
       # elsif user_input == "9"
       #   list_options
         # user_input = gets.strip
@@ -196,20 +205,24 @@ class Runner
         puts "Please input a state's two letter code"
         state = gets.strip
         find_parks_by_state(state)
-        list_options
-        user_input = gets.strip
+        # list_options
+        # user_input = gets.strip
+        user_input = prompt_user_main_menu
       elsif user_input == "3"
         find_all_parks
-        list_options
-        user_input = gets.strip
+        # list_options
+        # user_input = gets.strip
+        user_input = prompt_user_main_menu
       elsif user_input == ""
-        list_options
-        # main_menu
-        user_input = gets.strip
+        # list_options
+        # # main_menu
+        # user_input = gets.strip
+        user_input = prompt_user_main_menu
       else
         puts "I'm sorry, I don't understand your request. Please try again:"
-        list_options
-        user_input = gets.strip
+        # list_options
+        # user_input = gets.strip
+        user_input = prompt_user_main_menu
       end
     end
   end
