@@ -94,6 +94,21 @@ class Runner
     park.url
   end
 
+  def prompt_user_main_menu
+    prompt = TTY::Prompt.new
+    choices = ["1. Find a park by name", "2. Find all parks by state", "3. List all of the parks (there are 497 of them!)", "4. Exit the application"]
+    user_input = prompt.select("Please select from one of the options below:", choices)
+    user_input = user_input.split(".")[0]
+  end
+
+  def prompt_user_park_info
+    prompt = TTY::Prompt.new
+    choices = ["1. Park description", "2. States(s) that the park is in", "3. Directions information", "4. Directions on the web", "5. Park weather", "6. Latitude and Longitude", "7. Park designation", "8. Visit the park on the web", "9. Return to previous menu"]
+    user_input = prompt.select("What would you like to know about this park?", choices)
+    user_input = user_input.split(".")[0]
+  end
+
+
   def park_info_options_navigator(park)
     user_input = gets.strip
     until user_input == "9"
@@ -158,11 +173,14 @@ class Runner
   end
 
   def main_menu
-    user_input = gets.strip
-    until user_input == "leave"
-      # binding.pry
+    # puts "1. Find a park by name"
+    # puts "2. Find all parks by state"
+    # puts "3. List all of the parks (there are 497 of them!)"
+    # puts "Type 'leave' to leave the application"
+    # user_input = gets.strip
+    user_input = prompt_user_main_menu
+    until user_input == "4"
       if user_input == "1"
-        # binding.pry
         puts "Please input a park name"
         park_name = gets.strip
         park = find_park_by_name(park_name)
@@ -184,8 +202,6 @@ class Runner
         find_all_parks
         list_options
         user_input = gets.strip
-      # elsif user_input == "leave"
-      #   puts "Goodbye!"
       elsif user_input == ""
         list_options
         # main_menu
@@ -228,7 +244,7 @@ class Runner
   def run
     tree_art
     greet_user
-    list_options
+    # list_options
     main_menu
     puts "=================================================="
     puts "Thank you for using the National Parks Database!"

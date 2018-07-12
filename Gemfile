@@ -8,5 +8,6 @@ gem "require_all"
 gem 'rest-client'
 gem 'json'
 gem 'launchy'
+gem 'tty-prompt'
 # gem 'net/https'
 # gem 'uri'
