@@ -201,24 +201,31 @@ class Runner
       if user_input == "1"
         puts "Please input a park name"
         park_name = gets.strip
-        park = find_park_by_name(park_name)
-        puts "=================================================="
-        small_mountains
-        puts "=================================================="
-        puts "You have selected #{park.full_name}."
-        puts "=================================================="
-        # list_options_for_park
-        # user_input = gets.strip
-        # user_input = prompt_user_park_info
-        park_info_options_navigator(park)
-        user_input = "4"
+          if park = find_park_by_name(park_name)
+          puts "=================================================="
+          small_mountains
+          puts "=================================================="
+          puts "You have selected #{park.full_name}."
+          puts "=================================================="
+          # list_options_for_park
+          # user_input = gets.strip
+          # user_input = prompt_user_park_info
+          park_info_options_navigator(park)
+          user_input = "4"
+        else
+          puts "I'm sorry, but I am unable to find that park. Please try again:"
+        end
       elsif user_input == "2"
         puts "Please input a state's two letter code"
         state = gets.strip
-        find_parks_by_state(state)
-        # list_options
-        # user_input = gets.strip
-        user_input = prompt_user_main_menu
+        if find_parks_by_state(state).size > 0
+          find_parks_by_state(state)
+          # list_options
+          # user_input = gets.strip
+          user_input = prompt_user_main_menu
+        else
+          puts "I'm sorry, but I am unable to find that state. Please try again:"
+        end
       elsif user_input == "3"
         find_all_parks
         # list_options
