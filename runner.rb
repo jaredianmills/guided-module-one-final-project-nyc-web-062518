@@ -125,7 +125,7 @@ class Runner
     UserVisitedPark.create(user_id: current_user.id, park_id: park.id)
   end
 
-  def add_park_to_wishlist_parks(park)
+  def add_park_to_wishlist_parks(park, current_user)
     UserWishlistPark.create(user_id: current_user.id, park_id: park.id)
   end
 
@@ -139,7 +139,7 @@ class Runner
 
   def print_users_wishlist_parks(user)
     puts "=================================================="
-    puts "You have visited the following parks:"
+    puts "The following parks are on your visitation wishlist:"
     parks = user.wishlist_parks
     parks.each {|park| puts park.full_name}
     puts "=================================================="
@@ -272,7 +272,6 @@ class Runner
         puts "Please enter the name of a park that you have visited:"
         park_name = gets.strip
         if park = find_park_by_name(park_name)
-          binding.pry
           add_park_to_visited_parks(park, current_user)
           puts "=================================================="
           puts "You have added #{park.full_name} to the list of parks you have visted."
@@ -289,8 +288,26 @@ class Runner
           puts "We couldn't find any parks that you have visited."
           user_input = prompt_user_main_menu
         end
-        # park_info_options_navigator(park)
-        # user_input = "8"
+      elsif user_input == "6"
+        puts "Please enter the name of a park that you have visited:"
+        park_name = gets.strip
+        if park = find_park_by_name(park_name)
+          add_park_to_wishlist_parks(park, current_user)
+          puts "=================================================="
+          puts "You have added #{park.full_name} to your visitation wishlist."
+          puts "=================================================="
+          user_input = prompt_user_main_menu
+        else
+          puts "I'm sorry, but I am unable to find that park. Please try again:"
+        end
+      elsif user_input == "7"
+        if current_user.wishlist_parks.size > 0
+          print_users_wishlist_parks(current_user)
+          user_input = prompt_user_main_menu
+        else
+          puts "We couldn't find any parks on your visitation wishlist."
+          user_input = prompt_user_main_menu
+        end
       else
         park_name = gets.strip
         add_park_to_visited_parks(park_name, current_user)
@@ -333,6 +350,9 @@ class Runner
     else
       current_user = User.create(name: user_name)
     end
+    puts "=================================================="
+    puts "Welcome, #{current_user.name}"
+    puts "=================================================="
     main_menu(current_user)
     puts "=================================================="
     puts "Thank you for using the National Parks Database!"
