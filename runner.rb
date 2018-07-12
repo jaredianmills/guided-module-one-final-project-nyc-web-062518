@@ -139,12 +139,14 @@ class Runner
       elsif user_input == "5"
         puts "=================================================="
         puts get_park_weather(park)
+        puts "=================================================="
         # list_options_for_park
         # user_input = gets.strip
         user_input = prompt_user_park_info
       elsif user_input == "6"
         puts "=================================================="
         puts get_lat_and_long(park)
+        puts "=================================================="
         # list_options_for_park
         # user_input = gets.strip
         user_input = prompt_user_park_info
@@ -152,9 +154,11 @@ class Runner
         if get_park_designation(park) == ""
           puts "=================================================="
           puts "I'm sorry, I do not have that information."
+          puts "=================================================="
         else
           puts "=================================================="
-        puts get_park_designation(park)
+          puts get_park_designation(park)
+          puts "=================================================="
         end
         # list_options_for_park
         # user_input = gets.strip
@@ -170,7 +174,8 @@ class Runner
         # main_menu
       else
         puts "I'm sorry, I don't understand your request. Please try again:"
-        list_options
+        user_input = prompt_user_park_info
+        # list_options
         # main_menu
       end
 
@@ -197,10 +202,12 @@ class Runner
         small_mountains
         puts "=================================================="
         puts "You have selected #{park.full_name}."
-        list_options_for_park
+        puts "=================================================="
+        # list_options_for_park
         # user_input = gets.strip
+        user_input = prompt_user_park_info
         park_info_options_navigator(park)
-        user_input = ""
+        # user_input = ""
       elsif user_input == "2"
         puts "Please input a state's two letter code"
         state = gets.strip
