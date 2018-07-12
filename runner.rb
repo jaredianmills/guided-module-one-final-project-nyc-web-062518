@@ -21,6 +21,31 @@ class Runner
 
   end
 
+  # def mountains_and_road
+  #   puts <<-HEREDOC
+  #                                                  _
+  #                       ___                       (_)
+  #                     _/XXX\
+  #      _             /XXXXXX\_                                    __
+  #      X\__    __   /X XXXX XX\                          _       /XX\__      ___
+  #          \__/  \_/__       \ \                       _/X\__   /XX XXX\____/XXX\
+  #        \  ___   \/  \_      \ \               __   _/      \_/  _/  -   __  -  \__/
+  #       ___/   \__/   \ \__     \\__           /  \_//  _ _ \  \     __  /  \____//
+  #       /  __    \  /     \ \_   _//_\___     _/    //           \___/  \/     __/
+  #       __/_______\________\__\_/________\_ _/_____/_____________/_______\____/_______
+  #                                         /|\
+  #                                        / | \
+  #                                       /  |  \
+  #                                      /   |   \
+  #                                     /    |    \
+  #                                    /     |     \
+  #                                   /      |      \
+  #                                  /       |       \
+  #                                 /        |        \
+  #                                /         |         \
+  #     HEREDOC
+  #   end
+
   def greet_user
     puts "=================================================="
     puts "Hello! Welcome to the US National Parks Database!"
@@ -96,7 +121,7 @@ class Runner
 
   def prompt_user_main_menu
     prompt = TTY::Prompt.new
-    choices = ["1. Find a park by name", "2. Find all parks by state", "3. List all of the parks (there are 497 of them!)", "4. Add a park to the list of parks you have visited", "5. See all the parks you have visited", "6. Add a park to your visitation wishlist", "7. See all the parks you have added to your visitation wishlist", "8. Exit the application"]
+    choices = ["1. Find a park by name", "2. Find all parks by state", "3. List all of the parks (there are 497 of them!)", "4. Have you visited any parks? Add them to your list!", "5. See all the parks you have visited", "6. Want to visit a park in the future? Add it to your list!", "7. See all the parks you have added to your visitation wishlist", "8. Exit the application"]
     user_input = prompt.select("Please select from one of the options below:", choices)
     user_input = user_input.split(".")[0]
   end
@@ -122,11 +147,29 @@ class Runner
   end
 
   def add_park_to_visited_parks(park, current_user)
+    if UserVisitedPark.all.find {|visited_park| visited_park.user_id == current_user.id && visited_park.park_id == park.id}
+      puts "=================================================="
+      puts "You have already added that park to the list of parks that you have visisted."
+      puts "=================================================="
+    else
     UserVisitedPark.create(user_id: current_user.id, park_id: park.id)
+    puts "=================================================="
+    puts "You have added #{park.full_name} to the list of parks you have visted."
+    puts "=================================================="
+    end
   end
 
   def add_park_to_wishlist_parks(park, current_user)
-    UserWishlistPark.create(user_id: current_user.id, park_id: park.id)
+    if UserWishlistPark.all.find {|wishlist_park| wishlist_park.user_id == current_user.id && wishlist_park.park_id == park.id}
+      puts "=================================================="
+      puts "You have already added that park to the list of parks that you have visisted."
+      puts "=================================================="
+    else
+      UserWishlistPark.create(user_id: current_user.id, park_id: park.id)
+      puts "=================================================="
+      puts "You have added #{park.full_name} to your visitation wishlist."
+      puts "=================================================="
+    end
   end
 
   def print_users_visited_parks(user)
@@ -269,13 +312,10 @@ class Runner
         # user_input = gets.strip
         user_input = prompt_user_main_menu
       elsif user_input == "4"
-        puts "Please enter the name of a park that you have visited:"
+        puts "Please enter the name of a park:"
         park_name = gets.strip
         if park = find_park_by_name(park_name)
           add_park_to_visited_parks(park, current_user)
-          puts "=================================================="
-          puts "You have added #{park.full_name} to the list of parks you have visted."
-          puts "=================================================="
           user_input = prompt_user_main_menu
         else
           puts "I'm sorry, but I am unable to find that park. Please try again:"
@@ -289,13 +329,10 @@ class Runner
           user_input = prompt_user_main_menu
         end
       elsif user_input == "6"
-        puts "Please enter the name of a park that you have visited:"
+        puts "Please enter the name of a park:"
         park_name = gets.strip
         if park = find_park_by_name(park_name)
           add_park_to_wishlist_parks(park, current_user)
-          puts "=================================================="
-          puts "You have added #{park.full_name} to your visitation wishlist."
-          puts "=================================================="
           user_input = prompt_user_main_menu
         else
           puts "I'm sorry, but I am unable to find that park. Please try again:"
@@ -342,6 +379,7 @@ class Runner
 
 
   def run
+    # mountains_and_road
     tree_art
     greet_user
     user_name = get_user_name
