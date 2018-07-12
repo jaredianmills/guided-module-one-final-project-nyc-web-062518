@@ -96,7 +96,7 @@ class Runner
 
   def prompt_user_main_menu
     prompt = TTY::Prompt.new
-    choices = ["1. Find a park by name", "2. Find all parks by state", "3. List all of the parks (there are 497 of them!)", "4. Exit the application"]
+    choices = ["1. Find a park by name", "2. Find all parks by state", "3. List all of the parks (there are 497 of them!)", "4. Add a park to the list of parks you have visited", "5. See all the parks you have visited", "6. Add a park to your visitation wishlist", "7. See all the parks you have added to your visitation wishlist", "8. Exit the application"]
     user_input = prompt.select("Please select from one of the options below:", choices)
     user_input = user_input.split(".")[0]
   end
@@ -106,6 +106,43 @@ class Runner
     choices = ["1. Park description", "2. States(s) that the park is in", "3. Directions information", "4. Directions on the web", "5. Park weather", "6. Latitude and Longitude", "7. Park designation", "8. Visit the park on the web", "9. Return to previous menu"]
     user_input = prompt.select("What would you like to know about this park?", choices)
     user_input = user_input.split(".")[0]
+  end
+
+  def get_user_name
+    puts "Please enter your name:"
+    user_name = gets.strip
+  end
+
+  def find_user_in_database(user_name)
+    User.all.find{|user| user.name.downcase == user_name.downcase}
+  end
+
+  def user_exists?(user_name)
+    find_user_in_database(user_name)
+  end
+
+  def add_park_to_visited_parks(park, current_user)
+    UserVisitedPark.create(user_id: current_user.id, park_id: park.id)
+  end
+
+  def add_park_to_wishlist_parks(park)
+    UserWishlistPark.create(user_id: current_user.id, park_id: park.id)
+  end
+
+  def print_users_visited_parks(user)
+    puts "=================================================="
+    puts "You have visited the following parks:"
+    parks = user.visited_parks
+    parks.each {|park| puts park.full_name}
+    puts "=================================================="
+  end
+
+  def print_users_wishlist_parks(user)
+    puts "=================================================="
+    puts "You have visited the following parks:"
+    parks = user.wishlist_parks
+    parks.each {|park| puts park.full_name}
+    puts "=================================================="
   end
 
 
@@ -190,14 +227,14 @@ class Runner
     main_menu
   end
 
-  def main_menu
+  def main_menu(current_user)
     # puts "1. Find a park by name"
     # puts "2. Find all parks by state"
     # puts "3. List all of the parks (there are 497 of them!)"
     # puts "Type 'leave' to leave the application"
     # user_input = gets.strip
     user_input = prompt_user_main_menu
-    until user_input == "4"
+    until user_input == "8"
       if user_input == "1"
         puts "Please input a park name"
         park_name = gets.strip
@@ -211,7 +248,7 @@ class Runner
           # user_input = gets.strip
           # user_input = prompt_user_park_info
           park_info_options_navigator(park)
-          user_input = "4"
+          user_input = "8"
         else
           puts "I'm sorry, but I am unable to find that park. Please try again:"
         end
@@ -231,16 +268,32 @@ class Runner
         # list_options
         # user_input = gets.strip
         user_input = prompt_user_main_menu
-      # elsif user_input == ""
-      #   # list_options
-      #   # # main_menu
-      #   # user_input = gets.strip
-      #   user_input = prompt_user_main_menu
-      # else
-      #   puts "I'm sorry, I don't understand your request. Please try again:"
-      #   # list_options
-      #   # user_input = gets.strip
-      #   user_input = prompt_user_main_menu
+      elsif user_input == "4"
+        puts "Please enter the name of a park that you have visited:"
+        park_name = gets.strip
+        if park = find_park_by_name(park_name)
+          binding.pry
+          add_park_to_visited_parks(park, current_user)
+          puts "=================================================="
+          puts "You have added #{park.full_name} to the list of parks you have visted."
+          puts "=================================================="
+          user_input = prompt_user_main_menu
+        else
+          puts "I'm sorry, but I am unable to find that park. Please try again:"
+        end
+      elsif user_input == "5"
+        if current_user.visited_parks.size > 0
+          print_users_visited_parks(current_user)
+          user_input = prompt_user_main_menu
+        else
+          puts "We couldn't find any parks that you have visited."
+          user_input = prompt_user_main_menu
+        end
+        # park_info_options_navigator(park)
+        # user_input = "8"
+      else
+        park_name = gets.strip
+        add_park_to_visited_parks(park_name, current_user)
       end
     end
   end
@@ -274,8 +327,13 @@ class Runner
   def run
     tree_art
     greet_user
-    # list_options
-    main_menu
+    user_name = get_user_name
+    if user_exists?(user_name)
+      current_user = find_user_in_database(user_name)
+    else
+      current_user = User.create(name: user_name)
+    end
+    main_menu(current_user)
     puts "=================================================="
     puts "Thank you for using the National Parks Database!"
     puts "=================================================="
