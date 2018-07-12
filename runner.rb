@@ -116,18 +116,21 @@ class Runner
       if user_input == "1"
         puts "=================================================="
         puts get_park_description(park)
+        puts "=================================================="
         # list_options_for_park
         # user_input = gets.strip
         user_input = prompt_user_park_info
       elsif user_input == "2"
         puts "=================================================="
         puts "#{park.full_name} is in the following state(s): #{get_states_park_is_in(park)}"
+        puts "=================================================="
         # list_options_for_park
         # user_input = gets.strip
         user_input = prompt_user_park_info
       elsif user_input == "3"
         puts "=================================================="
         puts get_directions_information(park)
+        puts "=================================================="
         # list_options_for_park
         # user_input = gets.strip
         user_input = prompt_user_park_info
@@ -169,21 +172,22 @@ class Runner
         # user_input = gets.strip
         user_input = prompt_user_park_info
       # elsif user_input == "9"
-      #   list_options
+        # list_options
         # user_input = gets.strip
         # main_menu
-      else
-        puts "I'm sorry, I don't understand your request. Please try again:"
-        user_input = prompt_user_park_info
-        # list_options
-        # main_menu
+      # else
+      #   puts "I'm sorry, I don't understand your request. Please try again:"
+      #   user_input = ""
+      #   # list_options
+      #   # main_menu
       end
 
       # user_input
     end
     # user_input = gets.strip
-    # main_menu(user_input)
-    # user_input == ""
+    # user_input = prompt_user_main_menu
+    user_input = ""
+    main_menu
   end
 
   def main_menu
@@ -205,9 +209,9 @@ class Runner
         puts "=================================================="
         # list_options_for_park
         # user_input = gets.strip
-        user_input = prompt_user_park_info
+        # user_input = prompt_user_park_info
         park_info_options_navigator(park)
-        # user_input = ""
+        user_input = "4"
       elsif user_input == "2"
         puts "Please input a state's two letter code"
         state = gets.strip
@@ -220,20 +224,19 @@ class Runner
         # list_options
         # user_input = gets.strip
         user_input = prompt_user_main_menu
-      elsif user_input == ""
-        # list_options
-        # # main_menu
-        # user_input = gets.strip
-        user_input = prompt_user_main_menu
-      else
-        puts "I'm sorry, I don't understand your request. Please try again:"
-        # list_options
-        # user_input = gets.strip
-        user_input = prompt_user_main_menu
+      # elsif user_input == ""
+      #   # list_options
+      #   # # main_menu
+      #   # user_input = gets.strip
+      #   user_input = prompt_user_main_menu
+      # else
+      #   puts "I'm sorry, I don't understand your request. Please try again:"
+      #   # list_options
+      #   # user_input = gets.strip
+      #   user_input = prompt_user_main_menu
       end
     end
   end
-
 
   def big_mountains
   puts  "          /\\"
