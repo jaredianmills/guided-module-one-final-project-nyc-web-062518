@@ -21,34 +21,64 @@ class Runner
 
   end
 
-  # def mountains_and_road
-  #   puts <<-HEREDOC
-  #                                                  _
-  #                       ___                       (_)
-  #                     _/XXX\
-  #      _             /XXXXXX\_                                    __
-  #      X\__    __   /X XXXX XX\                          _       /XX\__      ___
-  #          \__/  \_/__       \ \                       _/X\__   /XX XXX\____/XXX\
-  #        \  ___   \/  \_      \ \               __   _/      \_/  _/  -   __  -  \__/
-  #       ___/   \__/   \ \__     \\__           /  \_//  _ _ \  \     __  /  \____//
-  #       /  __    \  /     \ \_   _//_\___     _/    //           \___/  \/     __/
-  #       __/_______\________\__\_/________\_ _/_____/_____________/_______\____/_______
-  #                                         /|\
-  #                                        / | \
-  #                                       /  |  \
-  #                                      /   |   \
-  #                                     /    |    \
-  #                                    /     |     \
-  #                                   /      |      \
-  #                                  /       |       \
-  #                                 /        |        \
-  #                                /         |         \
-  #     HEREDOC
-  #   end
+  def mountains_and_road
+    puts "                                                  _"
+    puts "                       ___                       (_)"
+    puts "                     _/XXX\\"
+    puts "      _             /XXXXXX\\_                                    __"
+    puts "      X\\__    __   /X XXXX XX\\                          _       /XX\\__      ___"
+    puts "          \\__/  \\_/__       \\ \\                       _/X\\__   /XX XXX\\____/XXX\\"
+    puts "        \\  ___   \\/  \\_      \\ \\               __   _/      \\_/  _/  -   __  -  \\__/"
+    puts "       ___/   \\__/   \\ \\__     \\\\__           /  \\_//  _ _ \\  \\     __  /  \\____//"
+    puts "       /  __    \\  /     \\ \\_   _//_\\___     _/    //           \\___/  \\/     __/"
+    puts "       __/_______\\________\\__\\_/________\\_ _/_____/_____________/_______\\____/_______"
+    puts "                                         /|\\"
+    puts "                                        / | \\"
+    puts "                                       /  |  \\"
+    puts "                                      /   |   \\"
+    puts "                                     /    |    \\"
+    puts "                                    /     |     \\"
+    puts "                                   /      |      \\"
+    puts "                                  /       |       \\"
+    puts "                                 /        |        \\"
+    puts "                                /         |         \\"
+  end
+
+  def happy_trails
+    puts <<-HEREDOC
+     /$$   /$$  /$$$$$$  /$$$$$$$  /$$$$$$$   /$$     /$$
+    | $$  | $$ /$$__  $$| $$__  $$| $$__  $$ |  $$   /$$/
+    | $$  | $$| $$  \\ $$| $$  \\ $$| $$  \\ $$ \\   $$ /$$/
+    | $$$$$$$$| $$$$$$$$| $$$$$$$/| $$$$$$$/  \\  $$$$/
+    | $$__  $$| $$__  $$| $$____/ | $$____/    \\  $$/
+    | $$  | $$| $$  | $$| $$      | $$          | $$
+    | $$  | $$| $$  | $$| $$      | $$          | $$
+    |__/  |__/|__/  |__/|__/      |__/          |__/
+    HEREDOC
+    sleep(1)
+
+    puts <<-HEREDOC
+    /$$$$$$$$ /$$$$$$$   /$$$$$$  /$$$$$$ /$$        /$$$$$$
+    |__  $$__/| $$__  $$ /$$__  $$|_  $$_/| $$       /$$__  $$
+       | $$   | $$  \\ $$| $$  \\ $$  | $$  | $$      | $$  \\__/
+       | $$   | $$$$$$$/| $$$$$$$$  | $$  | $$      |  $$$$$$
+       | $$   | $$__  $$| $$__  $$  | $$  | $$       \\____  $$
+       | $$   | $$  \\ $$| $$  | $$  | $$  | $$       /$$  \\ $$
+       | $$   | $$  | $$| $$  | $$ /$$$$$$| $$$$$$$$|  $$$$$$/
+       |__/   |__/  |__/|__/  |__/|______/|________/ \\______/
+    HEREDOC
+  end
 
   def greet_user
+    puts "Welcome to..."
+    sleep(1)
+    happy_trails
+    sleep(1)
+    mountains_and_road
+    sleep(1)
     puts "=================================================="
-    puts "Hello! Welcome to the US National Parks Database!"
+    puts "*Data by the U.S. National Parks Service"
+    puts "=================================================="
   end
 
   def list_options
@@ -79,12 +109,31 @@ class Runner
   end
 
   def find_parks_by_state(state)
-    parks_by_state = Park.all.select {|park| park.states.downcase.include?(state.downcase)}
-    parks_by_state.each {|park| puts park.full_name}
+    # tree_art
+    # sleep(1)
+    Park.all.select {|park| park.states.downcase.include?(state.downcase)}
+    # parks_by_state.each {|park| puts park.full_name}
+  end
+
+  def print_parks_by_state(state)
+    sleep(0.5)
+    tree_art
+    sleep(0.1)
+    parks_by_state = find_parks_by_state(state)
+    parks_by_state.each do |park|
+      sleep(0.05)
+      puts park.full_name
+    end
   end
 
   def find_all_parks
-    Park.all.each {|park| puts park.full_name}
+    sleep(0.1)
+    tree_art
+    sleep(0.1)
+    Park.all.each do |park|
+      sleep(0.01)
+      puts park.full_name
+    end
   end
 
   def get_park_description(park)
@@ -154,6 +203,7 @@ class Runner
     else
     UserVisitedPark.create(user_id: current_user.id, park_id: park.id)
     puts "=================================================="
+    tree_art
     puts "You have added #{park.full_name} to the list of parks you have visted."
     puts "=================================================="
     end
@@ -167,6 +217,7 @@ class Runner
     else
       UserWishlistPark.create(user_id: current_user.id, park_id: park.id)
       puts "=================================================="
+      tree_art
       puts "You have added #{park.full_name} to your visitation wishlist."
       puts "=================================================="
     end
@@ -174,6 +225,7 @@ class Runner
 
   def print_users_visited_parks(user)
     puts "=================================================="
+    puts small_mountains
     puts "You have visited the following parks:"
     parks = user.visited_parks
     parks.each {|park| puts park.full_name}
@@ -182,6 +234,7 @@ class Runner
 
   def print_users_wishlist_parks(user)
     puts "=================================================="
+    small_mountains
     puts "The following parks are on your visitation wishlist:"
     parks = user.wishlist_parks
     parks.each {|park| puts park.full_name}
@@ -194,6 +247,7 @@ class Runner
     user_input = prompt_user_park_info
     until user_input == "9"
       if user_input == "1"
+        sleep(0.1)
         puts "=================================================="
         puts get_park_description(park)
         puts "=================================================="
@@ -201,6 +255,7 @@ class Runner
         # user_input = gets.strip
         user_input = prompt_user_park_info
       elsif user_input == "2"
+        sleep(0.1)
         puts "=================================================="
         puts "#{park.full_name} is in the following state(s): #{get_states_park_is_in(park)}"
         puts "=================================================="
@@ -208,6 +263,7 @@ class Runner
         # user_input = gets.strip
         user_input = prompt_user_park_info
       elsif user_input == "3"
+        sleep(0.1)
         puts "=================================================="
         puts get_directions_information(park)
         puts "=================================================="
@@ -220,6 +276,7 @@ class Runner
         # user_input = gets.strip
         user_input = prompt_user_park_info
       elsif user_input == "5"
+        sleep(0.1)
         puts "=================================================="
         puts get_park_weather(park)
         puts "=================================================="
@@ -227,6 +284,7 @@ class Runner
         # user_input = gets.strip
         user_input = prompt_user_park_info
       elsif user_input == "6"
+        sleep(0.1)
         puts "=================================================="
         puts get_lat_and_long(park)
         puts "=================================================="
@@ -235,10 +293,12 @@ class Runner
         user_input = prompt_user_park_info
       elsif user_input == "7"
         if get_park_designation(park) == ""
+          sleep(0.1)
           puts "=================================================="
           puts "I'm sorry, I do not have that information."
           puts "=================================================="
         else
+          sleep(0.1)
           puts "=================================================="
           puts get_park_designation(park)
           puts "=================================================="
@@ -282,28 +342,32 @@ class Runner
         puts "Please input a park name"
         park_name = gets.strip
           if park = find_park_by_name(park_name)
-          puts "=================================================="
-          small_mountains
-          puts "=================================================="
-          puts "You have selected #{park.full_name}."
-          puts "=================================================="
-          # list_options_for_park
-          # user_input = gets.strip
-          # user_input = prompt_user_park_info
-          park_info_options_navigator(park)
-          user_input = "8"
+            sleep(0.3)
+            puts "=================================================="
+            small_mountains
+            puts "=================================================="
+            puts "You have selected #{park.full_name}."
+            puts "=================================================="
+            # list_options_for_park
+            # user_input = gets.strip
+            # user_input = prompt_user_park_info
+            park_info_options_navigator(park)
+            user_input = "8"
         else
+          sleep(0.1)
           puts "I'm sorry, but I am unable to find that park. Please try again:"
         end
       elsif user_input == "2"
+        sleep(0.1)
         puts "Please input a state's two letter code"
         state = gets.strip
         if find_parks_by_state(state).size > 0
-          find_parks_by_state(state)
+          print_parks_by_state(state)
           # list_options
           # user_input = gets.strip
           user_input = prompt_user_main_menu
         else
+          sleep(0.1)
           puts "I'm sorry, but I am unable to find that state. Please try again:"
         end
       elsif user_input == "3"
@@ -312,36 +376,46 @@ class Runner
         # user_input = gets.strip
         user_input = prompt_user_main_menu
       elsif user_input == "4"
+        sleep(0.1)
         puts "Please enter the name of a park:"
         park_name = gets.strip
         if park = find_park_by_name(park_name)
+          sleep(0.1)
           add_park_to_visited_parks(park, current_user)
           user_input = prompt_user_main_menu
         else
+          sleep(0.1)
           puts "I'm sorry, but I am unable to find that park. Please try again:"
         end
       elsif user_input == "5"
         if current_user.visited_parks.size > 0
+          sleep(0.1)
           print_users_visited_parks(current_user)
           user_input = prompt_user_main_menu
         else
+          sleep(0.1)
           puts "We couldn't find any parks that you have visited."
           user_input = prompt_user_main_menu
         end
       elsif user_input == "6"
+        sleep(0.1)
         puts "Please enter the name of a park:"
         park_name = gets.strip
         if park = find_park_by_name(park_name)
+          sleep(0.1)
           add_park_to_wishlist_parks(park, current_user)
           user_input = prompt_user_main_menu
         else
+          sleep(0.1)
           puts "I'm sorry, but I am unable to find that park. Please try again:"
         end
       elsif user_input == "7"
         if current_user.wishlist_parks.size > 0
+          sleep(0.1)
           print_users_wishlist_parks(current_user)
           user_input = prompt_user_main_menu
         else
+          sleep(0.1)
           puts "We couldn't find any parks on your visitation wishlist."
           user_input = prompt_user_main_menu
         end
@@ -380,7 +454,8 @@ class Runner
 
   def run
     # mountains_and_road
-    tree_art
+    # happy_trails
+    # tree_art
     greet_user
     user_name = get_user_name
     if user_exists?(user_name)
@@ -392,9 +467,11 @@ class Runner
     puts "Welcome, #{current_user.name}"
     puts "=================================================="
     main_menu(current_user)
+    sleep(0.1)
     puts "=================================================="
-    puts "Thank you for using the National Parks Database!"
+    puts "Thank you for using Happy Trails!"
     puts "=================================================="
+    sleep(0.1)
     big_mountains
   end
 
