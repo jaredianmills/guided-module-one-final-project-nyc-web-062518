@@ -30,7 +30,7 @@ class Runner
     puts "          \\__/  \\_/__       \\ \\                       _/X\\__   /XX XXX\\____/XXX\\"
     puts "        \\  ___   \\/  \\_      \\ \\               __   _/      \\_/  _/  -   __  -  \\__/"
     puts "       ___/   \\__/   \\ \\__     \\\\__           /  \\_//  _ _ \\  \\     __  /  \\____//"
-    puts "       /  __    \\  /     \\ \\_   _//_\\___     _/    //           \\___/  \\/     __/"
+    puts "      /   __    \\ /      \\ \\_   _//_\\___     _/    //           \\___/  \\/     __/"
     puts "       __/_______\\________\\__\\_/________\\_ _/_____/_____________/_______\\____/_______"
     puts "                                         /|\\"
     puts "                                        / | \\"
@@ -242,7 +242,7 @@ class Runner
   end
 
 
-  def park_info_options_navigator(park)
+  def park_info_options_navigator(park, current_user)
     # user_input = gets.strip
     user_input = prompt_user_park_info
     until user_input == "9"
@@ -327,7 +327,7 @@ class Runner
     # user_input = gets.strip
     # user_input = prompt_user_main_menu
     user_input = ""
-    main_menu
+    main_menu(current_user)
   end
 
   def main_menu(current_user)
@@ -351,7 +351,7 @@ class Runner
             # list_options_for_park
             # user_input = gets.strip
             # user_input = prompt_user_park_info
-            park_info_options_navigator(park)
+            park_info_options_navigator(park, current_user)
             user_input = "8"
         else
           sleep(0.1)
@@ -461,7 +461,8 @@ class Runner
     if user_exists?(user_name)
       current_user = find_user_in_database(user_name)
     else
-      current_user = User.create(name: user_name)
+      User.create(name: user_name)
+      current_user = find_user_in_database(user_name)
     end
     puts "=================================================="
     puts "Welcome, #{current_user.name}"
